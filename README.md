@@ -1,2 +1,2 @@
 # SberSchoolprojects
-This folder contains all my homework for the sber school
+## Задание: Описать отличия Trunk-baseddevelopment от feature- подхода.
