@@ -1,2 +1,2 @@
 # SberSchoolprojects
-## Задание: Описать отличия Trunk-baseddevelopment от feature- подхода.
+## Задание: Описать отличия Trunk-based development от feature- подхода.
