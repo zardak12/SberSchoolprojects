@@ -48,11 +48,8 @@ final class PonchikView : UIView {
     }
     
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        //point(inside: <#T##CGPoint#>, with: <#T##UIEvent?#>)
+ 
         let view = super.hitTest(point, with: event)
-        if view === self {
-            return nil
-        }
         return view
     }
 }
