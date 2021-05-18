@@ -7,6 +7,7 @@
 
 import UIKit
 
+  //MARK: - Наш бублик
 final class PonchikView : UIView {
   
   convenience init() {
@@ -22,7 +23,7 @@ final class PonchikView : UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
-  
+  /// метод, который отвечает за отрисовку в данной View
   override func draw(_ rect: CGRect) {
     let half:CGFloat = min(bounds.size.width/2, bounds.size.height/2)
     

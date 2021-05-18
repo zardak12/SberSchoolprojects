@@ -9,17 +9,19 @@ import UIKit
 
 class ViewController: UIViewController {
 
-  
-  lazy var ponchik : UIView  = {
+    /// сам пончик 
+    lazy var ponchik : PonchikView  = {
     let myPonchik = PonchikView()
     return myPonchik
   }()
-  
-  lazy var holeView : UIView = {
+
+    /// отвечает за отрисовку нашей дырки внутри бублика
+  lazy var holeView : HoleView = {
     let myHole = HoleView()
     return myHole
   }()
   
+    /// кнопка по нажатие которй переход на NextViewController
   lazy var button: UIButton = {
     let button = UIButton(type: .system)
     button.setTitle("BOOM", for: .normal)
@@ -29,7 +31,11 @@ class ViewController: UIViewController {
     return button
   }()
   
-  
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+        settingsNavigationContoller()
+    }
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .purple
@@ -46,9 +52,19 @@ class ViewController: UIViewController {
     holeView.center = view.center
     ponchik.center = view.center
   }
+    
+      //MARK: - UINavigationContoller settings
+    func settingsNavigationContoller() {
+        self.navigationController?.navigationBar.titleTextAttributes = [.foregroundColor: UIColor.purple]
+        self.navigationController?.navigationBar.barTintColor = .yellow
+        self.title =  "Ponchik"
+    }
 
+      //MARK: - buttonTaped
+    /// осуществляет сам переход
   @objc func buttonTaped() {
-   present(NextViewController(), animated: true)
+    self.navigationController?.pushViewController(NextViewController(), animated: true)
+   //present(NextViewController(), animated: true)
   }
 
 }

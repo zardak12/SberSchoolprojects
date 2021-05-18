@@ -7,6 +7,7 @@
 
 import UIKit
 
+  //MARK: - Представление внутри нашего бублика
 final class HoleView : UIView {
   
   convenience init(diameter: CGFloat) {
@@ -22,6 +23,7 @@ final class HoleView : UIView {
     fatalError("init(coder:) has not been implemented")
   }
   
+    ///метод, который отвечает за отрисовку в данной View
   override func draw(_ rect: CGRect) {
     let half:CGFloat = min(bounds.size.width/2, bounds.size.height/2)
     let circlePath = UIBezierPath(arcCenter: CGPoint(x:half,y:half),
