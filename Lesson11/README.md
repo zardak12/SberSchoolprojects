@@ -1,6 +1,6 @@
 # HomeWork
 ## Домашнее задание
-#### Реализовать кнопку share (UIActivityViewController) 
-#### Исключить PostToFlickr, PostToVimeo, SaveToCameraRoll
-#### Обработать остальные
-#### Реализовать 1 любую свою UIActivity
+#### 1) Реализовать кнопку share (UIActivityViewController) 
+#### 2) Исключить PostToFlickr, PostToVimeo, SaveToCameraRoll
+#### 3) Обработать остальные
+#### 4) Реализовать 1 любую свою UIActivity
