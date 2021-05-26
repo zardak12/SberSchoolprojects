@@ -23,9 +23,9 @@ class ViewController: UIViewController {
     }()
     
     lazy var waterImageView : UIImageView = {
-        let image = UIImageView()//UIImageView(image: UIImage(named: "капля"))
+        let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
-        image.alpha = 1
+        //image.alpha = 1
         return image
     }()
     
@@ -86,7 +86,15 @@ class ViewController: UIViewController {
 
 
     
-    
+    lazy var deleteButton : UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Delete", for: .normal)
+        button.layer.cornerRadius = 20
+        button.backgroundColor = .red
+        button.addTarget(self, action: #selector(deleteAll), for: .touchUpInside)
+        return button
+    }()
     
     
     lazy var growButton : UIButton = {
@@ -105,6 +113,7 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .white
         view.addSubview(treeImageView)
+        view.addSubview(deleteButton)
         view.addSubview(growButton)
         view.addSubview(leikaWithoutWaterImageView)
         view.addSubview(waterImageView)
@@ -133,12 +142,24 @@ class ViewController: UIViewController {
     
     
     func setLayoutButton() {
+        
         NSLayoutConstraint.activate([
-            growButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
+            deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
+            deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            deleteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            deleteButton.heightAnchor.constraint(equalToConstant: 40),
+            deleteButton.topAnchor.constraint(equalTo: growButton.topAnchor, constant: 50)
+            
+            
+            
+        ])
+        NSLayoutConstraint.activate([
+            //growButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
             growButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             growButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             growButton.heightAnchor.constraint(equalToConstant: 40)
         ])
+        
         
     }
     
@@ -186,7 +207,6 @@ class ViewController: UIViewController {
             appleTwoImageView.widthAnchor.constraint(equalToConstant: 40),
             appleTwoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor,constant: 10),
             appleTwoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor,constant: 110)
-            //appleTwoImageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -60)
         ])
         
         /// Three
@@ -265,15 +285,33 @@ class ViewController: UIViewController {
             animation.duration = 1
             animation.fillMode = CAMediaTimingFillMode.forwards
             animation.isRemovedOnCompletion = false
-            self.appleOneImageView.layer.add(animation, forKey: nil)
-            self.appleTwoImageView.layer.add(animation, forKey: nil)
-            self.appleThreeImageView.layer.add(animation, forKey: nil)
-            self.appleFourImageView.layer.add(animation, forKey: nil)
-            self.appleFiveImageView.layer.add(animation, forKey: nil)
-            self.appleSixImageView.layer.add(animation, forKey: nil)
-            self.appleSevenImageView.layer.add(animation, forKey: nil)
+            self.appleOneImageView.layer.add(animation, forKey: "opacity 2")
+            self.appleTwoImageView.layer.add(animation, forKey: "opacity 2")
+            self.appleThreeImageView.layer.add(animation, forKey: "opacity 2")
+            self.appleFourImageView.layer.add(animation, forKey: "opacity 2")
+            self.appleFiveImageView.layer.add(animation, forKey: "opacity 2")
+            self.appleSixImageView.layer.add(animation, forKey: "opacity 2")
+            self.appleSevenImageView.layer.add(animation, forKey: "opacity 2")
             
         })
+    }
+    
+    @objc func deleteAll() {
+        UIView.animate(withDuration: 3) {
+            self.treeImageView.transform = .identity
+            self.leikaWithoutWaterImageView.transform = .identity
+            self.waterImageView.transform = .identity
+            self.waterImageView.image = .none
+            self.waterImageView.alpha = 1.0
+            self.leikaWithoutWaterImageView.alpha = 1.0
+            self.appleOneImageView.layer.removeAllAnimations()
+            self.appleTwoImageView.layer.removeAllAnimations()
+            self.appleThreeImageView.layer.removeAllAnimations()
+            self.appleFourImageView.layer.removeAllAnimations()
+            self.appleFiveImageView.layer.removeAllAnimations()
+            self.appleSixImageView.layer.removeAllAnimations()
+            self.appleSevenImageView.layer.removeAllAnimations()
+        }
     }
     
 }
