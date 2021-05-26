@@ -9,12 +9,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    /// дерево
     lazy var treeImageView : UIImageView = {
         let image = UIImageView(image: UIImage(named: "дерево"))
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
+    /// леечка которая поливает цветочки
     lazy var leikaWithoutWaterImageView : UIImageView = {
         let image = UIImageView(image: UIImage(named: "лейка"))
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -22,6 +24,7 @@ class ViewController: UIViewController {
         return image
     }()
     
+    /// изображение капли, которая падает и поливает наш цветочек
     lazy var waterImageView : UIImageView = {
         let image = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
@@ -29,11 +32,7 @@ class ViewController: UIViewController {
         return image
     }()
     
-    lazy var listokImageView : UIImageView = {
-        let image = UIImageView(image: UIImage(named: "листочек"))
-        image.translatesAutoresizingMaskIntoConstraints = false
-        return image
-    }()
+    /// коллекция наших яблочек
     
     lazy var appleOneImageView : UIImageView = {
         let image = UIImageView(image: UIImage(named: "яблоко"))
@@ -85,7 +84,7 @@ class ViewController: UIViewController {
     }()
 
 
-    
+    /// кнопка удаления наших анимаций
     lazy var deleteButton : UIButton = {
        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -96,7 +95,7 @@ class ViewController: UIViewController {
         return button
     }()
     
-    
+    /// кнопка роста нашего дерева 
     lazy var growButton : UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -126,6 +125,7 @@ class ViewController: UIViewController {
         view.addSubview(appleSevenImageView)
     }
     
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         setLayoutButton()
@@ -135,26 +135,22 @@ class ViewController: UIViewController {
         setLayoutApple()
     }
     
-    override func viewWillLayoutSubviews() {
-        super.viewWillLayoutSubviews()
+      //MARK: - AutoLayout
     
-    }
-    
-    
+    /// AutoLayout Button
     func setLayoutButton() {
         
+        /// AutoLayout кнопки удалить
         NSLayoutConstraint.activate([
             deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -30),
             deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             deleteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             deleteButton.heightAnchor.constraint(equalToConstant: 40),
             deleteButton.topAnchor.constraint(equalTo: growButton.topAnchor, constant: 50)
-            
-            
-            
         ])
+        
+        /// AutoLayout дерева
         NSLayoutConstraint.activate([
-            //growButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -50),
             growButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             growButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
             growButton.heightAnchor.constraint(equalToConstant: 40)
@@ -162,6 +158,8 @@ class ViewController: UIViewController {
         
         
     }
+    
+    /// AutoLayout Tree
     
     func setLayoutTree() {
         NSLayoutConstraint.activate([
@@ -173,6 +171,7 @@ class ViewController: UIViewController {
         ])
     }
     
+    /// AutoLayout Leika
     
     func setLayoutLeika() {
         NSLayoutConstraint.activate([
@@ -183,6 +182,7 @@ class ViewController: UIViewController {
         ])
     }
     
+    /// AutoLayout Капли
     func setLayoutWater() {
         NSLayoutConstraint.activate([
             waterImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -192,6 +192,7 @@ class ViewController: UIViewController {
         ])
     }
     
+    /// AutoLayout яблок
     func setLayoutApple() {
         /// One
         NSLayoutConstraint.activate([
@@ -257,12 +258,16 @@ class ViewController: UIViewController {
         
     }
     
+        //MARK: - Grow Tree
+    
     @objc func grow() {
         
+        /// Сначала поворачивается лейка
         UIView.animate(withDuration: 2.0, animations: {
             self.leikaWithoutWaterImageView.transform = CGAffineTransform(rotationAngle: -.pi / 3)
         })
         
+        /// Потом падает капля
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0, execute: {
             UIView.animate(withDuration: 2) {
                 self.waterImageView.image = #imageLiteral(resourceName: "капля")
@@ -270,7 +275,7 @@ class ViewController: UIViewController {
                 self.waterImageView.alpha = 0
             }
         })
-        
+        /// Пропадает Лейка и начинает расти наше дерево
         DispatchQueue.main.asyncAfter(deadline: .now() + 3.0, execute: {
             UIView.animate(withDuration: 2) {
                 self.leikaWithoutWaterImageView.alpha = 0
@@ -278,6 +283,7 @@ class ViewController: UIViewController {
             }
         })
         
+        /// И теперь растут наши ябочки ( 7 штук )
         DispatchQueue.main.asyncAfter(deadline: .now() + 5.0, execute: {
             let animation = CABasicAnimation(keyPath: "opacity")
             animation.fromValue = 0
@@ -295,6 +301,8 @@ class ViewController: UIViewController {
             
         })
     }
+    
+      //MARK: - Delete Animations
     
     @objc func deleteAll() {
         UIView.animate(withDuration: 3) {
