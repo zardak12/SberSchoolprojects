@@ -2,7 +2,7 @@
 //  AppDelegate.swift
 //  NetworkApp
 //
-//  Created by Марк Шнейдерман on 01.06.2021.
+//  Created by OUT-Shneyderman-MY on 3/6/21.
 //
 
 import UIKit
@@ -10,13 +10,18 @@ import UIKit
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-var window: UIWindow?
+  var window: UIWindow?
+  var network : NetworkServiceProtocol = NetworkService()
 
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UINavigationController(rootViewController: ViewController())
-        window?.makeKeyAndVisible()
-        return true
-    }
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+    window = UIWindow(frame: UIScreen.main.bounds)
+    window?.rootViewController = UINavigationController(rootViewController: ViewController(networkService: network))
+    window?.makeKeyAndVisible()
+    return true
+    
+  }
+
+
+
 }
 

@@ -2,7 +2,15 @@
 //  NetworkServiceProtocol.swift
 //  NetworkApp
 //
-//  Created by Марк Шнейдерман on 02.06.2021.
+//  Created by OUT-Shneyderman-MY on 3/6/21.
 //
 
 import Foundation
+
+typealias GetNewsApiResponce = Result<GetNewsResponce,NetworkError>
+
+
+protocol NetworkServiceProtocol{
+  func getNews(completion : @escaping(GetNewsApiResponce)->Void)
+  func loadData(with imageUrl : String, completion : @escaping(Data?)->Void)
+}
