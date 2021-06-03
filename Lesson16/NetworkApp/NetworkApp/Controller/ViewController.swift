@@ -14,7 +14,7 @@ class ViewController: BaseViewContoller {
     tableView.delegate   =  self
     tableView.dataSource =  self
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.register(NewCell.self, forCellReuseIdentifier: NewCell.identifier)
+    tableView.register(NewCell.self, forCellReuseIdentifier: NewCell.CellConstants.identifier)
     return tableView
     
   }()
@@ -105,16 +105,25 @@ class ViewController: BaseViewContoller {
 
 
 extension ViewController : UITableViewDelegate {
-  
 }
 
 extension ViewController : UITableViewDataSource {
+    
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        let item = dataSource[indexPath.row]
+//        var height = NewCell.sizeFor(item.headline, width: tableView.frame.width)
+//        if height < 50 {
+//            height = 50
+//        }
+//        return height
+//    }
+    
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return dataSource.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: NewCell.identifier) as! NewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: NewCell.CellConstants.identifier) as! NewCell
     cell.configure(with: dataSource[indexPath.row])
     return cell
   }
