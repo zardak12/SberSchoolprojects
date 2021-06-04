@@ -5,7 +5,8 @@
 //  Created by OUT-Shneyderman-MY on 3/6/21.
 //
 
-// MARK: -Error
+
+// MARK: - Error
 
 enum NetworkError : Error{
   case unauthorize

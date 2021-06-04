@@ -9,8 +9,10 @@ import UIKit
 
 class BaseViewContoller : UIViewController {
   
+  // MARK: - Child
   private let spinner = SpinnerViewController()
   
+  // MARK: - On/Off Spinner 
   var isLoading = false {
     didSet {
       guard oldValue != isLoading else { return }
@@ -18,6 +20,8 @@ class BaseViewContoller : UIViewController {
     }
   }
     
+    // MARK: - show Spinner
+  
     private func showSpinner(isShown: Bool) {
         if isShown {
             addChild(spinner)

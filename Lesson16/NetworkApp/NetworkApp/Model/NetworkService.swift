@@ -11,11 +11,13 @@ final class NetworkService : NetworkServiceProtocol   {
   private let session : URLSession = .shared
   private let decoder = JSONDecoder()
   
+  // MARK: - Upload News
+  
   func getNews(completion: @escaping (GetNewsApiResponce) -> Void) {
-    var components = URLComponents(string: Constants.StockMethod.getNews)
+    var components = URLComponents(string: NetworkConstants.StockMethod.getNews)
     components?.queryItems = [
-      URLQueryItem(name: "category", value: Constants.StockKey.category),
-      URLQueryItem(name: "token", value: Constants.StockKey.token)
+      URLQueryItem(name: "category", value: NetworkConstants.StockKey.category),
+      URLQueryItem(name: "token", value: NetworkConstants.StockKey.token)
     ]
     guard let url = components?.url  else {completion(.failure(.unknown)); return }
     var request = URLRequest(url: url)
@@ -33,9 +35,22 @@ final class NetworkService : NetworkServiceProtocol   {
     }.resume()
   }
   
-  func loadImage(with imageUrl: String, completion: @escaping (Data?) -> Void) {
-    
+  // MARK: - Upoload Image
+  func loadImage(with model: GetNewsResponce, completion: @escaping (Data?) -> Void) {
+    let imageUrl = model.image
+    guard  let url = URL(string: imageUrl) else { completion(nil);return}
+    let request = URLRequest(url: url, cachePolicy: .returnCacheDataElseLoad)
+    let dataTask = session.dataTask(with: request) { (data, responce, error) in
+      do {
+        let data =  try self.httpResponse(data: data, response: responce)
+        completion(data)
+      } catch {
+        completion(nil)
+      }
+    }.resume()
   }
+  
+  // MARK: - Check Errors
   
   private func httpResponse(data: Data?, response: URLResponse?) throws -> Data {
       guard let httpResponse = response as? HTTPURLResponse,

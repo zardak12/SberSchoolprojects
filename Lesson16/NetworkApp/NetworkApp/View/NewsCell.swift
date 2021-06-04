@@ -9,13 +9,7 @@ import UIKit
 
 class NewCell: UITableViewCell {
   
-    enum CellConstants {
-        static let identifier = "newsIndetifier"
-        static let leftOffset : CGFloat = 72
-        static let fontSize = UIFont.systemFont(ofSize:12)
-        static let addToHeight : CGFloat = 16
-    }
-    
+    // MARK: - UI
     private lazy var titleLabel : UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -24,6 +18,8 @@ class NewCell: UITableViewCell {
         return title
     }()
     
+  // MARK: - Init
+  
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         contentView.addSubview(titleLabel)
@@ -34,6 +30,7 @@ class NewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+  // MARK: -  Layout
     func layout() {
         NSLayoutConstraint.activate([
         titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),
@@ -43,16 +40,9 @@ class NewCell: UITableViewCell {
         ])
     }
     
+  // MARK: - Configure
   
   func configure(with model: GetNewsResponce) {
     titleLabel.text = model.headline
   }
-    
-//    static func sizeFor(_ text : String, width : CGFloat) -> CGFloat {
-//        let attributtedString = NSAttributedString(string: text, attributes: [NSAttributedString.Key.font: CellConstants.fontSize])
-//        let rect = attributtedString.boundingRect(with: CGSize(width : width - CellConstants.leftOffset,height: .greatestFiniteMagnitude),
-//                                                  options: .usesLineFragmentOrigin,
-//                                                  context: nil)
-//        return rect.size.height + CellConstants.addToHeight
-//    }
 }

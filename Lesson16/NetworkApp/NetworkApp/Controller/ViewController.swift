@@ -7,20 +7,25 @@
 
 import UIKit
 
-class ViewController: BaseViewContoller {
+final class ViewController: BaseViewContoller {
   
+  // MARK: - UI
   private lazy var tableView : UITableView = {
     let tableView = UITableView()
     tableView.delegate   =  self
     tableView.dataSource =  self
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.register(NewCell.self, forCellReuseIdentifier: NewCell.CellConstants.identifier)
+    tableView.register(NewCell.self, forCellReuseIdentifier: CellConstants.identifier)
     return tableView
     
   }()
   
+  // MARK: - Dependencies
+  
   private var networkService : NetworkServiceProtocol
   private var dataSource = [GetNewsResponce]()
+  
+  // MARK: - Init
   
   init(networkService : NetworkServiceProtocol) {
     self.networkService = networkService
@@ -56,8 +61,11 @@ class ViewController: BaseViewContoller {
     ])
   }
   
+  // MARK: -  LoadData
+  
   func loadData() {
     isLoading = true
+    /// getNews handler
     self.networkService.getNews{ responce in
         DispatchQueue.main.async {
         switch responce{
@@ -72,18 +80,17 @@ class ViewController: BaseViewContoller {
     }
   }
   
-    
-    
-    
-    
-    
+  // MARK: -  UIAlertController
+  
   private func showAlert(for error: NetworkError) {
-      let alert = UIAlertController(title: "Опаньки, что-то пошло не так",
+      let alert = UIAlertController(title: "Error",
                                     message: message(for: error),
                                     preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
       present(alert, animated: true)
   }
-
+  
+  // MARK: -  message
   private func message(for error: NetworkError) -> String {
       switch error {
       case .network:
@@ -103,27 +110,26 @@ class ViewController: BaseViewContoller {
 }
 
 
+// MARK: - UITableViewDelegate
 
 extension ViewController : UITableViewDelegate {
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    tableView.deselectRow(at: indexPath,animated : true)
+    let imageViewController = ImageViewController(networkService: networkService, model: dataSource[indexPath.row])
+    navigationController?.pushViewController(imageViewController, animated: true)
+  }
 }
 
+  // MARK: - UITableViewDataSource
+
 extension ViewController : UITableViewDataSource {
-    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        let item = dataSource[indexPath.row]
-//        var height = NewCell.sizeFor(item.headline, width: tableView.frame.width)
-//        if height < 50 {
-//            height = 50
-//        }
-//        return height
-//    }
     
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return dataSource.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: NewCell.CellConstants.identifier) as! NewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: CellConstants.identifier) as! NewCell
     cell.configure(with: dataSource[indexPath.row])
     return cell
   }

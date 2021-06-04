@@ -7,9 +7,9 @@
 
 import UIKit
 
-class SpinnerViewController : UIViewController {
+final class SpinnerViewController : UIViewController {
   
-  // MARK: -Spinner
+  // MARK: - UI
   
   private lazy var  spiner : UIActivityIndicatorView  = {
     let spinner = UIActivityIndicatorView(style: .large)
@@ -18,6 +18,7 @@ class SpinnerViewController : UIViewController {
     return spinner
   }()
   
+  // MARK: - Life Circle
   override func loadView() {
     view = UIView()
     view.backgroundColor = .white
@@ -25,7 +26,7 @@ class SpinnerViewController : UIViewController {
     spinnerLayout()
   }
   
-  // MARK: -Layout
+  // MARK: - Layout
   
   func spinnerLayout() {
     NSLayoutConstraint.activate([
