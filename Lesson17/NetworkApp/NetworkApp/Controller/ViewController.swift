@@ -15,7 +15,7 @@ final class ViewController: BaseViewContoller {
     tableView.delegate   =  self
     tableView.dataSource =  self
     tableView.translatesAutoresizingMaskIntoConstraints = false
-    tableView.register(NewCell.self, forCellReuseIdentifier: CellConstants.identifier)
+    tableView.register(NewCell.self, forCellReuseIdentifier: NewCell.identifier)
     return tableView
     
   }()
@@ -129,7 +129,7 @@ extension ViewController : UITableViewDataSource {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: CellConstants.identifier) as! NewCell
+    let cell = tableView.dequeueReusableCell(withIdentifier: NewCell.identifier) as! NewCell
     cell.configure(with: dataSource[indexPath.row])
     return cell
   }

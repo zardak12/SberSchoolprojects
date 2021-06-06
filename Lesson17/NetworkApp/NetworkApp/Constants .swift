@@ -19,20 +19,3 @@ enum NetworkConstants {
     static let getNews = "https://finnhub.io/api/v1/news"
   }
 }
-
-// MARK: - UITableViewCell Constants
-
-enum CellConstants {
-    static let identifier = "newsIndetifier"
-    static let leftOffset : CGFloat = 72
-    static let fontSize = UIFont.systemFont(ofSize:12)
-    static let addToHeight : CGFloat = 16
-}
-
-// MARK: - ImageCiewController Constants
-
-enum ImageConstants {
-  static let sizeOfCategory = UIFont.systemFont(ofSize:25)
-  static let sizeOfText = UIFont.systemFont(ofSize:20)
-  static let imageViewConstraint : CGFloat = 30
-}

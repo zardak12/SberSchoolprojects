@@ -9,16 +9,29 @@ import UIKit
 
 class NewCell: UITableViewCell {
   
+    //MARK: - Identifier
+    
+    static let identifier = "newsIndetifier"
+    
+    //MARK: - Constants
+    
+    private let leftOffset : CGFloat = 72
+    private let fontSize = UIFont.systemFont(ofSize:12)
+    private let addToHeight : CGFloat = 16
+    private let titleLabelTopAndBottomAnchor : CGFloat = 8
+    private let titleLabelLeangdAndTrailingAnchor : CGFloat = 5
+    
     // MARK: - UI
+    
     private lazy var titleLabel : UILabel = {
         let title = UILabel()
         title.translatesAutoresizingMaskIntoConstraints = false
         title.numberOfLines = 0
-        title.font = CellConstants.fontSize
+        title.font =  fontSize
         return title
     }()
     
-  // MARK: - Init
+    // MARK: - Init
   
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -30,13 +43,13 @@ class NewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-  // MARK: -  Layout
+    // MARK: -  Layout
     func layout() {
         NSLayoutConstraint.activate([
-        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 8),
-        titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -8),
-        titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 5),
-        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -5)
+        titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: titleLabelTopAndBottomAnchor),
+        titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -titleLabelTopAndBottomAnchor),
+        titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: titleLabelLeangdAndTrailingAnchor),
+        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -titleLabelLeangdAndTrailingAnchor)
         ])
     }
     

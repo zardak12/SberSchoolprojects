@@ -10,11 +10,23 @@ import UIKit
 
 final class  ImageViewController:  BaseViewContoller {
   
+
+  //MARK: - Constants
+    
+  private let sizeOfCategory = UIFont.systemFont(ofSize:25)
+  private let sizeOfText = UIFont.systemFont(ofSize:20)
+  private let imageViewConstraint : CGFloat = 30
+  private let labelLeadingAndTralingAnchor : CGFloat = 20
+  private let sourceLabelTopAnchor : CGFloat = 30
+  private let headlineLabelTopAnchor : CGFloat = 60
+    
   // MARK: - Dependencies
+    
   private var networkService : NetworkServiceProtocol
   private var model : GetNewsResponce
   
   // MARK: - UI
+    
   private lazy var imageView : UIImageView = {
     let image = UIImageView()
     image.translatesAutoresizingMaskIntoConstraints = false
@@ -23,11 +35,11 @@ final class  ImageViewController:  BaseViewContoller {
     return image
   }()
   
-  private lazy var categoryLabel : UILabel = {
+  private lazy var sourceLabel : UILabel = {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
-    label.font = ImageConstants.sizeOfCategory
+    label.font = sizeOfCategory
     return label
   }()
   
@@ -35,7 +47,7 @@ final class  ImageViewController:  BaseViewContoller {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.numberOfLines = 0
-    label.font = ImageConstants.sizeOfText
+    label.font = sizeOfText
     return label
   }()
   
@@ -67,10 +79,10 @@ final class  ImageViewController:  BaseViewContoller {
   // MARK: - configure UI
   private func configureView() {
     view.backgroundColor = .white
-    title = String(model.id)
+    title = String(model.category)
   }
   private func add() {
-    view.addSubview(categoryLabel)
+    view.addSubview(sourceLabel)
     view.addSubview(headlineLabel)
     view.addSubview(imageView)
   }
@@ -78,24 +90,24 @@ final class  ImageViewController:  BaseViewContoller {
 // MARK: - Layout
   private func  setLayout(){
     NSLayoutConstraint.activate([
-      categoryLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: 30),
-      categoryLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-      categoryLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-      categoryLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        sourceLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor,constant: sourceLabelTopAnchor),
+        sourceLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: labelLeadingAndTralingAnchor),
+        sourceLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -labelLeadingAndTralingAnchor),
+        sourceLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
     ])
     
     NSLayoutConstraint.activate([
-      headlineLabel.topAnchor.constraint(equalTo: categoryLabel.topAnchor,constant: 50),
-      headlineLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-      headlineLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-      headlineLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        headlineLabel.topAnchor.constraint(equalTo: sourceLabel.topAnchor,constant: headlineLabelTopAnchor),
+        headlineLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: labelLeadingAndTralingAnchor),
+        headlineLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -labelLeadingAndTralingAnchor),
+        headlineLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor)
     ])
     
     NSLayoutConstraint.activate([
-      imageView.topAnchor.constraint(equalTo: headlineLabel.bottomAnchor, constant: ImageConstants.imageViewConstraint),
-      imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -ImageConstants.imageViewConstraint),
-      imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: ImageConstants.imageViewConstraint),
-      imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -ImageConstants.imageViewConstraint)
+        imageView.topAnchor.constraint(equalTo: headlineLabel.bottomAnchor, constant: imageViewConstraint),
+        imageView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -imageViewConstraint),
+        imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: imageViewConstraint),
+        imageView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -imageViewConstraint)
     ])
   }
   
@@ -104,7 +116,7 @@ final class  ImageViewController:  BaseViewContoller {
     networkService.loadImage(with: model) { (data) in
       if let data = data, let image = UIImage(data: data) {
           DispatchQueue.main.async {
-            self.categoryLabel.text = "Category : \(self.model.category)"
+            self.sourceLabel.text = "Source : \(self.model.source)"
             if self.model.summary != "" {
               self.headlineLabel.text = "News : \(self.model.summary)"
             }else {

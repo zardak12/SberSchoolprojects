@@ -47,7 +47,8 @@ final class NetworkService : NetworkServiceProtocol   {
       } catch {
         completion(nil)
       }
-    }.resume()
+    }
+    dataTask.resume()
   }
   
   // MARK: - Check Errors
