@@ -104,7 +104,7 @@ class ViewController: UIViewController , ViewControllerDelegate {
         guard let selectedImage = imageView.image else {return}
         DataManager.shared.add(with: selectedImage)
         collectionView.reloadData()
-        //UIImageWriteToSavedPhotosAlbum(selectedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+        UIImageWriteToSavedPhotosAlbum(selectedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
     }
     
        //MARK: - Image Save
