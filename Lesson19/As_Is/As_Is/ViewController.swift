@@ -10,13 +10,16 @@ import CoreImage
 
 final class ViewController: UIViewController {
   
+    // MARK: -  Properties
+    
   private var context = CIContext()
   private var currentFilter : CIFilter?
   private var currentImage : UIImage?
   private let keyEffect = CIFilter.filterNames(inCategory: kCICategoryBuiltIn)
+  private var service = ServiceManager()
   
-  // MARK: -  Properties
   
+      //MARK: - UI
   private lazy var  slider : UISlider = {
     let slider = UISlider()
     slider.translatesAutoresizingMaskIntoConstraints = false
@@ -85,6 +88,8 @@ final class ViewController: UIViewController {
     startSetUp()
   }
   
+      //MARK: - Configure UI
+    
   func configure() {
     title = "Filters"
     self.navigationItem.rightBarButtonItem = addItem
@@ -97,6 +102,7 @@ final class ViewController: UIViewController {
     setUpConstraint()
   }
   
+      //MARK: - startSetUp
   func startSetUp() {
     currentImage = UIImage(named: "панда")
     currentFilter = CIFilter(name: "CISepiaTone")
@@ -141,7 +147,7 @@ final class ViewController: UIViewController {
   // MARK: - Update
   func update(with filterImage : UIImage,filter : CIFilter){
   
-    let newImage = ServiceManager().doFilter(image: filterImage , selectFilter: filter,valueIntesive : slider.value)
+    let newImage = service.doFilter(image: filterImage , selectFilter: filter,valueIntesive : slider.value)
     imageView.image = newImage
 
   }
@@ -154,7 +160,7 @@ final class ViewController: UIViewController {
     update(with: currentImage ?? UIImage(),filter: currentFilter ?? CIFilter())
   }
   
-  // MARK: -  Select Buttom
+  // MARK: -  Select Button
   
   @objc func choose(_ sender: UIButton) {
     let alert = UIAlertController(title: "Choose filter", message: "Please Select an filter", preferredStyle: .actionSheet)
@@ -172,28 +178,59 @@ final class ViewController: UIViewController {
     }
     
 }
+
+      //MARK: - Set Filter
+    
+    /// Alert handler
   func setFilter(action : UIAlertAction) {
     guard currentImage != nil else {return}
     guard  let actionTitle = action.title else { return }
     currentFilter = CIFilter(name: actionTitle)
     update(with: currentImage ?? UIImage(), filter: currentFilter ?? CIFilter())
   }
-  
-  
+ 
   // MARK: -  Save
   
+  /// сохраняет к себе в галерею
   @objc func save() {
     currentFilter = nil
-  }
+    guard let selectedImage = imageView.image else {return}
+    
+    UIImageWriteToSavedPhotosAlbum(selectedImage, self, #selector(image(_:didFinishSavingWithError:contextInfo:)), nil)
+   }
+   
+     //MARK: - Image Save
+   
+    ///Выводит информация сохранена ли фотография или произошла ошибка
+   @objc func image(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
+       if let error = error {
+           print("ERROR: \(error)")
+       }
+       else {
+           self.showAlert("Image saved", message: "The iamge is saved into your Photo Library.")
+       }
+   }
+   
   
+   private func showAlert(_ title: String, message: String) {
+       let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+       alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+       self.present(alert, animated: true, completion: nil)
+   }
+  
+      //MARK: - BarButtonItem
+    
+    /// Добавляет фото из библиотеки телефона
   @objc func addTapped() {
     guard UIImagePickerController.isSourceTypeAvailable(.photoLibrary) else {
         return
     }
     present(imagePicker, animated: true, completion: nil)
   }
+    
 }
 
+  //MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
 
 extension ViewController : UIImagePickerControllerDelegate,UINavigationControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

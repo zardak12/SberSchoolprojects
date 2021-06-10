@@ -1,8 +1,8 @@
 //
 //  Constants.swift
-//  As_Is
+//  ToBe
 //
-//  Created by OUT-Shneyderman-MY on 9/6/21.
+//  Created by Марк Шнейдерман on 10.06.2021.
 //
 
 import Foundation
