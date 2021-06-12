@@ -1,0 +1,11 @@
+framework module SberFramework {
+  umbrella header "SberFramework.h"
+
+  export *
+  module * { export * }
+}
+
+module SberFramework.Swift {
+    header "SberFramework-Swift.h"
+    requires objc
+}

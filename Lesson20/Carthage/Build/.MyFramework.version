@@ -1,0 +1,19 @@
+{
+  "commitish" : "v1.0",
+  "iOS" : [
+    {
+      "swiftToolchainVersion" : "5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)",
+      "hash" : "ce4251c3bd54473b678c6fe5fdc513efa236e2d1280cc2e2ed2ae6d6928bc4ca",
+      "name" : "SberFramework",
+      "container" : "SberFramework.xcframework",
+      "identifier" : "ios-arm64"
+    },
+    {
+      "swiftToolchainVersion" : "5.4 (swiftlang-1205.0.26.9 clang-1205.0.19.55)",
+      "hash" : "34eb979d6ea0cebdef477d8ac8ecb478cd6708cc7d167b777128d36bb0d07ddf",
+      "name" : "SberFramework",
+      "container" : "SberFramework.xcframework",
+      "identifier" : "ios-arm64_x86_64-simulator"
+    }
+  ]
+}
