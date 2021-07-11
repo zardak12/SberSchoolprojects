@@ -1,0 +1,18 @@
+//
+//  module.modulemap
+//  SwiftObjective
+//
+//  Created by Марк Шнейдерман on 11.07.2021.
+//
+
+module ObjcLibraryFirstModule {
+    header "../ObjcLibraryFirst/FirstUmbrella.h"
+    
+    explicit module ObjcLibrarySecondModule {
+        header "../ObjcLibrarySecond/SecondUmbrella.h"
+        export *
+    }
+    
+    export *
+}
+

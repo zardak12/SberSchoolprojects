@@ -1,0 +1,12 @@
+//
+//  ObjcLibraryFirst.m
+//  ObjcLibraryFirst
+//
+//  Created by Марк Шнейдерман on 11.07.2021.
+//
+
+#import "ObjcLibraryFirst.h"
+
+@implementation ObjcLibraryFirst
+
+@end

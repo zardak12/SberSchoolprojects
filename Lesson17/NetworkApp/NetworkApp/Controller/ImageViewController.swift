@@ -113,6 +113,8 @@ final class  ImageViewController:  BaseViewContoller {
   
   // MARK: - LoadData
   private func loadData() {
+   isLoading = true
+
     networkService.loadImage(with: model) { (data) in
       if let data = data, let image = UIImage(data: data) {
           DispatchQueue.main.async {
